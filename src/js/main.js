@@ -4,3 +4,4 @@ import Feed from './feed.js';
 
 let feed = new Feed();
 feed.render();
+feed.bindSearch();
