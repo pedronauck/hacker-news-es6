@@ -6,6 +6,7 @@ var gutil = require('gulp-util');
 var to5Browserify = require('6to5-browserify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var deploy = require('gulp-gh-pages');
 
 gulp.task('server', function() {
   browserSync({
@@ -38,10 +39,16 @@ gulp.task('bundle', ['copyVendors'], function() {
     .pipe(gulp.dest('./dist/js'));
 });
 
+gulp.task('deploy', function () {
+  gulp.src('./dist/**/*')
+    .pipe(deploy());
+});
+
 gulp.task('watch', function() {
   gulp.watch('./src/js/*.js', ['bundle', browserSync.reload]);
   gulp.watch('./src/css/style.css', ['dist', browserSync.reload]);
   gulp.watch('./src/index.html', ['dist', browserSync.reload]);
 });
 
-gulp.task('default', ['dist', 'bundle', 'watch', 'server']);
+gulp.task('build', ['dist', 'bundle']);
+gulp.task('default', ['build', 'watch', 'server']);
