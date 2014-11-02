@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var gutil = require('gulp-util');
-var to5 = require('gulp-6to5');
 var to5Browserify = require('6to5-browserify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
@@ -22,17 +21,17 @@ gulp.task('dist', function() {
     .pipe(gulp.dest('./dist'));
   gulp.src('./src/css/style.css')
     .pipe(gulp.dest('./dist/css'));
-})
-
-gulp.task('compile', function() {
-  gulp.src('./src/js/**/*.js')
-    .pipe(to5({ modules: 'common' }))
-    .pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('bundle', ['compile'], function() {
+gulp.task('copyVendors', function() {
+  gulp.src('./src/js/vendor/**')
+    .pipe(gulp.dest('./dist/js/vendor'));
+});
+
+gulp.task('bundle', ['copyVendors'], function() {
   browserify({ debug: true })
-    .require('./dist/js/main.js', { entry: true })
+    .transform(to5Browserify)
+    .require('./src/js/main.js', { entry: true })
     .bundle()
     .on('error', gutil.log)
     .pipe(source('bundle.js'))
@@ -40,11 +39,9 @@ gulp.task('bundle', ['compile'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./src/js/*.js', ['compile', 'bundle', browserSync.reload]);
+  gulp.watch('./src/js/*.js', ['bundle', browserSync.reload]);
   gulp.watch('./src/css/style.css', ['dist', browserSync.reload]);
   gulp.watch('./src/index.html', ['dist', browserSync.reload]);
 });
 
-gulp.task('default', [
-  'dist', 'compile', 'bundle', 'watch', 'server'
-]);
+gulp.task('default', ['dist', 'bundle', 'watch', 'server']);

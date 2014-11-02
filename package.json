@@ -4,16 +4,15 @@
   "description": "Hacker News feed built with ECMAScript 6 and jQuery",
   "author": "Pedro Nauck (https://github.com/pedronauck)",
   "license": "MIT",
+  "main": "gulpfile.js",
   "devDependencies": {
     "6to5": "^1.10.10",
     "6to5-browserify": "^1.0.0",
     "browser-sync": "^1.6.2",
     "browserify": "^6.2.0",
     "gulp": "^3.8.9",
-    "gulp-6to5": "^1.0.1",
     "gulp-util": "^3.0.1",
     "jquery": "^2.1.1",
     "vinyl-source-stream": "^1.0.0"
-  },
-  "main": "gulpfile.js"
+  }
 }
