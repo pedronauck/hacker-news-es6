@@ -7,7 +7,7 @@ Just a simple Hacker News Feed built using these ES6 features:
 - Let (Block scoping)
 - Arrow Functions
 
-##### Demo [here](pedronauck.github.io/hacker-news-es6)!
+##### Demo [here](http://pedronauck.github.io/hacker-news-es6)!
 
 ## Usabe
 
